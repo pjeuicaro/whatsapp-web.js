@@ -483,6 +483,11 @@ exports.LoadUtils = () => {
             ...extraOptions,
         };
 
+        // implement validated solution proposed by Jack-rockstar on PR 201923 https://github.com/wwebjs/whatsapp-web.js/pull/201923
+        if (message.__x_id) {
+            delete message.__x_id;
+        }
+
         // Bot's won't reply if canonicalUrl is set (linking)
         if (botOptions) {
             delete message.canonicalUrl;
