@@ -2415,6 +2415,9 @@ class Client extends EventEmitter {
                         .createWid(parentGroupId));
 
                 try {
+                    await window
+                        .require('WAWebNewGroupFlowLoadable')
+                        .requireBundle();
                     createGroupResult = await window
                         .require('WAWebGroupCreateJob')
                         .createGroup(
