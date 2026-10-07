@@ -578,6 +578,18 @@ class GroupChat extends Chat {
     async getInviteCode() {
         const codeRes = await this.client.pupPage.evaluate(async (chatId) => {
             try {
+                if (!window.__WWebJSGroupInviteBundleLoaded) {
+                    try {
+                        await window
+                            .require('WAWebGroupInviteLinkDrawerLoadable')
+                            .requireBundle();
+                    } catch (_e) {
+                        // best-effort: fall through and try the require anyway
+                        console.log(_e);
+                        throw _e;
+                    }
+                    window.__WWebJSGroupInviteBundleLoaded = true;
+                }
                 return await window
                     .require('WAWebMexFetchGroupInviteCodeJob')
                     .fetchMexGroupInviteCode(chatId);
